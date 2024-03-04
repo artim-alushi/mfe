@@ -3,12 +3,17 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const commontConfig = require("./webpack.common");
 const packageJson = require("../package.json");
 
+const PORT = 8080;
+
 const devConfig = {
   mode: "development",
+  output: {
+    publicPath: `http://localhost:${PORT}/`,
+  },
   devServer: {
-    port: 8080,
+    port: PORT,
     historyApiFallback: {
-      index: "index.html",
+      index: "/index.html",
     },
   },
   plugins: [
@@ -16,6 +21,7 @@ const devConfig = {
       name: "container", // Optional for the host, because we are not using the container no where
       remotes: {
         marketing: "marketing@http://localhost:8081/remoteEntry.js",
+        auth: "auth@http://localhost:8082/remoteEntry.js",
       },
       shared: packageJson.dependencies,
     }),

@@ -4,12 +4,12 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const commontConfig = require("./webpack.common");
 const packageJson = require("../package.json");
 
-const PORT = 8081;
+const PORT = 8082;
 
 const devConfig = {
   mode: "development",
   output: {
-    publicPath: `http://localhost:${PORT}/`, // For nesting routes, fails to load the main.js file
+    publicPath: `http://localhost:${PORT}/`,
   },
   devServer: {
     port: PORT,
@@ -19,10 +19,10 @@ const devConfig = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "marketing",
+      name: "auth",
       filename: "remoteEntry.js",
       exposes: {
-        "./MarketingApp": "./src/bootstrap",
+        "./AuthApp": "./src/bootstrap",
       },
       shared: packageJson.dependencies,
     }),
